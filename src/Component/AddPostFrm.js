@@ -29,6 +29,11 @@ import {createPost } from '../ActionCreator/postaction'
            body: this.state.body
           };         
           this.props.createPost(post)
+
+          this.setState({
+            title:"",
+            body:""
+          })
        
         }
         componentWillReceiveProps(nextProps) {
@@ -40,15 +45,15 @@ import {createPost } from '../ActionCreator/postaction'
     render() {
         return (
              <div className="container">
-        <form className="white" onSubmit={this.handleSubmit}  value={this.state.title} >
+        <form className="white" onSubmit={this.handleSubmit}  >
           <h5 className="grey-text text-darken-3">ADD NEW BOOKS</h5>
           <div className="input-field">
             <label htmlFor=" NAME"> NAME</label>
-            <input  type="text" id="title" onChange={this.handleChange}  />
+            <input  type="text" id="title"  value={this.state.title} onChange={this.handleChange}  />
           </div>
           <div className="input-field">
             <label htmlFor="discription"> Discription</label>
-            <input  type="text" id="body" onChange={this.handleChange}  />
+            <input  type="text" id="body"  value={this.state.body} onChange={this.handleChange}  />
           </div>
           <div className="input-field">
             <button className="btn BLUE lighten-1 z-depth-0"> ADD </button>

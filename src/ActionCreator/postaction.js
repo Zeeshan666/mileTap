@@ -1,5 +1,5 @@
     
-import { FETCH_POSTS, NEW_POST,DEL_POST } from '../ActionCreator/actionType';
+import { FETCH_POSTS, NEW_POST,DEL_POST ,UPDATE_POST} from '../ActionCreator/actionType';
 
 
 //del
@@ -7,10 +7,13 @@ export const deletePost =(id)=>{
     return {
         type:DEL_POST,
         id,
-    }
-
+    }}
+ export const update =(id)=>{
+  return {
+    type:UPDATE_POST,
+    id,
 }
-
+ }
 //fetch post
 export const fetchPosts = () => dispatch => {
     fetch('https://jsonplaceholder.typicode.com/posts')

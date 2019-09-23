@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import Addbookfrm from './AddPostFrm'
 import {connect} from 'react-redux'
 import Swal from 'sweetalert2'
-import {fetchPosts ,deletePost} from '../ActionCreator/postaction'
+import {fetchPosts,update,deletePost} from '../ActionCreator/postaction'
 import Pagination from './Pagination'
 class Home extends Component{
 
@@ -20,19 +20,20 @@ this.setState({
   currentPage:pageNumber
 })
 }
-       
-
-clickHandler=()=>{
- this.props.deletePost(this.props.posts[0].id);
- Swal.fire({
-  type: 'error',
-  title: 'delete',
-  text: 'item remove successfully!',
-
-})
-
+updateHandler=(id)=>{
+  this.props.update(id)
 }
 
+delHandler=(id)=>{
+  this.props.deletePost(id);
+  this.props.history.push('/home')
+  Swal.fire({
+   type: 'error',
+   title: 'delete',
+   text: 'item remove successfully!',
+ 
+ })
+ } 
 componentWillReceiveProps(nextProps) {
   if (nextProps.newPost) {
     this.props.posts.unshift(nextProps.newPost);
@@ -40,6 +41,7 @@ componentWillReceiveProps(nextProps) {
 }
 
 render(){
+  console.log(this.props)
   const indexOfLastPost = this.state.currentPage * this.props.postPerPage;
   console.log(indexOfLastPost)
   const indexOfFirstPost = indexOfLastPost - this.props.postPerPage;
@@ -52,9 +54,11 @@ render(){
          <Link  to={'/' + post.id}>
           <span className=" orange-text uppercase ">{post.title}</span>
           <h5 className="purple-text ">{post.body}</h5>
-          <button className=" btn orange" > read </button>
+          <button className=" btn btn-large orange" > read </button>
+        
            </Link>
-           <button className=" btn red" onClick={this.clickHandler}> delete post</button>
+           <button className=" btn btn-large green" onClick={()=>this.updateHandler(post.id)}> update</button>  
+           <button className=" btn btn-large red" onClick={()=>this.delHandler(post.id)}> delete post</button>
         </div>
       </div>
     )
@@ -91,7 +95,8 @@ const mapStateToProps =(state)=>{
 const mapDispatchToProps = (dispatch)=>{
   return{
     fetchPosts : ()=>dispatch(fetchPosts()),
-   deletePost : (id)=>dispatch(deletePost(id))
+    update: (id)=>dispatch(update(id)),
+    deletePost : (id)=>dispatch(deletePost(id)),
 }
 }
 export default connect(mapStateToProps,mapDispatchToProps) (Home)

@@ -13,13 +13,24 @@ class SignIn extends Component {
   }
   handleSubmit = (e) => {
     e.preventDefault();
-    console.log(this.state);
-    this.props.history.push('/home')
-    Swal.fire(
-      'login Success!',
-      '',
-      'success'
-    )
+    if(this.state.email ==="" || this.state.password===""){
+       
+      Swal.fire({
+        type: 'error',
+        title: 'Oops...',
+        text: 'plz fill form !',
+      })
+    }else{
+   
+      console.log(this.state);
+      this.props.history.push('/home')
+      Swal.fire(
+        'login Success!',
+        '',
+        'success'
+      )
+    }
+   
   }
   render() {
     return (
